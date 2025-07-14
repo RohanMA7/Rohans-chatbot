@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Chatpy - Your Friendly Chatbot</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f4f8;
+      margin: 0;
+      padding: 20px;
+    }
+    #chat-container {
+      width: 100%;
+      max-width: 500px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      padding: 15px;
+    }
+    #chat-log {
+      height: 300px;
+      overflow-y: auto;
+      border: 1px solid #ddd;
+      padding: 10px;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      white-space: pre-line;
+    }
+    .bot {
+      color: blue;
+    }
+    .user {
+      color: green;
+    }
+    #user-input {
+      width: 75%;
+      padding: 10px;
+      font-size: 14px;
+    }
+    #send-btn {
+      padding: 10px 20px;
+      font-size: 14px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="chat-container">
+    <h2>🤖 Chatpy - Python Chatbot in HTML</h2>
+    <div id="chat-log"></div>
+    <input type="text" id="user-input" placeholder="Type your message..." />
+    <button id="send-btn">Send</button>
+  </div>
+
+  <script>
+    const chatLog = document.getElementById('chat-log');
+    const userInput = document.getElementById('user-input');
+    const sendBtn = document.getElementById('send-btn');
+
+    function addMessage(sender, text) {
+      const msg = document.createElement('div');
+      msg.className = sender;
+      msg.textContent = (sender === 'user' ? 'You: ' : 'Bot: ') + text;
+      chatLog.appendChild(msg);
+      chatLog.scrollTop = chatLog.scrollHeight;
+    }
+
+    function botResponse(message) {
+      message = message.toLowerCase();
+      if (message.includes("hi") || message.includes("hello")) {
+        return "Hello there! 😊";
+      } else if (message.includes("how are you")) {
+        return "I'm doing great! How about you?";
+      } else if (message.includes("your name")) {
+        return "I'm Chatpy, your friendly chatbot!";
+      } else if (message.includes("joke")) {
+        return "Why don’t skeletons fight each other? Because they don’t have the guts! 😂";
+      } else if (message.includes("bye")) {
+        return "Bye! See you soon! 👋";
+      } else {
+        return "Hmm... I don't understand that yet.";
+      }
+    }
+
+    sendBtn.addEventListener('click', () => {
+      const message = userInput.value.trim();
+      if (message === "") return;
+      addMessage('user', message);
+      const reply = botResponse(message);
+      setTimeout(() => addMessage('bot', reply), 500); // Delay for realism
+      userInput.value = "";
+    });
+
+    userInput.addEventListener("keypress", function (e) {
+      if (e.key === "Enter") {
+        sendBtn.click();
+      }
+    });
+  </script>
+
+</body>
+</html>
